@@ -1,4 +1,8 @@
-<h1>movie project</h1>
+{% load static %}
+<h1>movie project
+    <img width="100px" height="100px" src="{% static 'images/logo.png' %}" alt="">
+</h1>
+
 {% include 'main.html' %}
 {% block content %}
 {% endblock %}
