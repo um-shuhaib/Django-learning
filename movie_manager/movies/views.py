@@ -28,7 +28,22 @@ def list(request):
 
 
 def edit(request,pk):
-    return render(request,'create.html')
+    instance_edit=MovieInfo.objects.get(pk=pk)
+    frm=MovieForm(instance=instance_edit)
+    if request.POST:
+        title=request.POST.get('title')
+        year=request.POST.get('year')
+        description=request.POST.get('desc')
+
+        instance_edit.title=title
+        instance_edit.year=year
+        instance_edit.desc=description
+
+        instance_edit.save()
+    frm=MovieForm(instance=instance_edit)
+
+
+    return render(request,'create.html',{'frm':frm})
 
 
 def delete(request,pk):
