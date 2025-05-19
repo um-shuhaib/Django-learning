@@ -27,5 +27,15 @@ def list(request):
     return render(request,'list.html',{'movie_list':movie_data})
 
 
-def edit(request):
-    return render(request,'edit.html')
+def edit(request,pk):
+    return render(request,'create.html')
+
+
+def delete(request,pk):
+    Instance=MovieInfo.objects.get(pk=pk)
+    Instance.delete()
+
+    Movie_set=MovieInfo.objects.all()
+
+
+    return render(request,'list.html',{'movie_list':Movie_set})
