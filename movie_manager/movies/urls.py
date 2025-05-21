@@ -23,3 +23,4 @@ urlpatterns = [
     path('edit/<pk>',views.edit,name='edit'),
     path('delete/<pk>',views.delete,name='delete'),
 ]
+

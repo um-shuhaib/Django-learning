@@ -4,8 +4,8 @@ from . forms import MovieForm
 # Create your views here.
 def create(request):
     frm=MovieForm()
-    if request.POST:
-       frm=MovieForm(request.POST)
+    if request.method == 'POST':
+       frm=MovieForm(request.POST,request.FILES)
        if frm.is_valid:
            frm.save()
        else:
