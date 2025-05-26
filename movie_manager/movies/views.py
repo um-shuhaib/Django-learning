@@ -6,10 +6,12 @@ def create(request):
     frm=MovieForm()
     if request.method == 'POST':
        frm=MovieForm(request.POST,request.FILES)
-       if frm.is_valid:
+       if frm.is_valid():
            frm.save()
        else:
-           frm=MovieForm()
+           print("Form errors:", frm.errors)
+    else:
+        frm=MovieForm()
     #    title= request.POST.get('title')
     #    year= request.POST.get('year')
     #    summary= request.POST.get('desc')
@@ -31,7 +33,7 @@ def edit(request,pk):
     instance_edit=MovieInfo.objects.get(pk=pk)
     frm=MovieForm(instance=instance_edit)
     if request.POST:
-        frm=MovieForm(request.POST,instance=instance_edit)
+        frm=MovieForm(request.POST,request.FILES,instance=instance_edit)
         if frm.is_valid():
             frm.save()
     else:
