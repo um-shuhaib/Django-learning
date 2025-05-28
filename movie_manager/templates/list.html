@@ -1,6 +1,11 @@
 {% extends 'blank.html' %}
 {% load static %}
 {% block content %}
+{% for movie_obj in recent_movie_set %}
+    <p>{{ movie_obj.title | upper }}</p>
+{% endfor %}
+
+
 <h1>list Movies {{ visiters }} times</h1>
 <table>
     <tr>

@@ -23,13 +23,15 @@ def create(request):
 
 
 def list(request):
+    recent_visits=request.session.get('recent_visits',[])
+    recent_movie_set=MovieInfo.objects.filter(pk__in=recent_visits)
     movie_data = MovieInfo.objects.all()
     print(movie_data)
-    visiters=int((request.COOKIES.get('visiters',0)))
+    visiters=int((request.session.get('visiters',0)))
     visiters=visiters+1
-
-    response=render(request,'list.html',{'movie_list':movie_data,'visiters':visiters})
-    response.set_cookie('visiters',visiters)
+    request.session['visiters']=visiters
+    response=render(request,'list.html',{'movie_list':movie_data,'recent_movie_set':recent_movie_set,'visiters':visiters})
+    
     return response
 
 
@@ -41,6 +43,9 @@ def edit(request,pk):
         if frm.is_valid():
             frm.save()
     else:
+        recent_visits=request.session.get('recent_visits',[])
+        recent_visits.insert(0,pk)
+        request.session['recent_visits']=recent_visits
 
         # title=request.POST.get('title')
         # year=request.POST.get('year')
