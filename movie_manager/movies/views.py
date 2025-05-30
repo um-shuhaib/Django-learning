@@ -1,7 +1,11 @@
 from django.shortcuts import render
 from . models import MovieInfo
 from . forms import MovieForm
+from django.contrib.auth.decorators import login_required
+
+
 # Create your views here.
+@login_required(login_url='login')
 def create(request):
     frm=MovieForm()
     if request.method == 'POST':
@@ -21,7 +25,7 @@ def create(request):
     
     return render(request,'create.html',{'frm':frm})
 
-
+@login_required(login_url='login')
 def list(request):
     recent_visits=request.session.get('recent_visits',[])
     recent_movie_set=MovieInfo.objects.filter(pk__in=recent_visits)
@@ -34,7 +38,7 @@ def list(request):
     
     return response
 
-
+@login_required(login_url='login')
 def edit(request,pk):
     instance_edit=MovieInfo.objects.get(pk=pk)
     frm=MovieForm(instance=instance_edit)
@@ -61,7 +65,7 @@ def edit(request,pk):
 
     return render(request,'create.html',{'frm':frm})
 
-
+@login_required(login_url='login')
 def delete(request,pk):
     Instance=MovieInfo.objects.get(pk=pk)
     Instance.delete()
